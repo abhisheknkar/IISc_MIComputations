@@ -14,12 +14,12 @@ for i = 1:4
     MFCCFiles = dir([MFCCClusterPath '*.txt']);
     
     for j = 1:length(MFCCFiles)
-        i,j
+        [i,j]
         PhonemeCluster = dlmread([PhonemeClusterPath MFCCFiles(j).name], '\n');
         MFCCCluster = dlmread([MFCCClusterPath MFCCFiles(j).name], '\n'); 
         MIMat{i}(j) = computeMI(PhonemeCluster, MFCCCluster);        
     end
 end
 mkdir('MI/');
-save(['MI/' scheme '_Phoneme.mat'], 'MIMat');
+% save(['MI/' scheme '_Phoneme.mat'], 'MIMat');
 toc

@@ -1,12 +1,13 @@
-clc;clear all; close all;
+% clc;clear all; close all;
 tic
-subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
+% subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 % Read cluster files for all batches for all subjects
 
-scheme = 'AAM';
-% load('MI/AAM_Phoneme.mat');
 MIMat = {[],[],[],[]};
-for i = 1:4
+scheme = 'AAM';
+
+load('MI/AAM_Phoneme.mat');
+for i = execRange
     PhonemeClusterPath = ['Outputs/Phonemes/' subjects{i} '/ClusterOutputs/'];
     AAMClusterPath = ['Outputs/' scheme '/' subjects{i} '/ClusterOutputs/'];
     
@@ -14,7 +15,7 @@ for i = 1:4
     AAMFiles = dir([AAMClusterPath '*.txt']);
     
     for j = 1:length(AAMFiles)
-        i,j
+        [i,j]
         PhonemeCluster = dlmread([PhonemeClusterPath AAMFiles(j).name], '\n');
         AAMCluster = dlmread([AAMClusterPath AAMFiles(j).name], '\n'); 
         MIMat{i}(j) = computeMI(PhonemeCluster, AAMCluster);        

@@ -11,12 +11,16 @@ AAMSizeMat = {[],[],[],[]};
 
 dirToSave = ['Outputs/' scheme '/'];
 mkdir(dirToSave);
-% load([dirToSave 'AAMs.mat']);
+load([dirToSave 'AAMs.mat']);
+load([dirToSave 'AAMUpsampled.mat']);
+
+execRange = [3:4];
 
 %  Populating the lip coordinate matrix for each frame
-for i = [1]
+for i = execRange
 % Recording Level
-    for j = 1%:24  %All recordings
+    temp = [];
+    for j = 1:24  %All recordings
         [i,j]
         rec_folder = ['../../X/' subjects{i} '/AAM/Rec' num2str(j) '/'];
         label_file = ['Labels/' subjects{i} '/' num2str((j-1)*100+1) '_' num2str(min(100*j,2368)) 'l.txt'];
@@ -42,22 +46,24 @@ for i = [1]
                         CoordMat = load(frame_path);
                         AAMCoords = CoordMat.fitted_shape; 
                         ToAdd = [AAMCoords(:,1)' AAMCoords(:,2)'];
-                        AAMMat{i}(end+1,:) = ToAdd;  
+%                         AAMMat{i}(end+1,:) = ToAdd;  
+                        temp(end+1,:) = ToAdd;
                     else
-                        AAMMat{i}(end+1,:) = zeros(1,44);
+%                         AAMMat{i}(end+1,:) = zeros(1,44);
+                        temp(end+1,:) = zeros(1,44);
                     end
                 end
             end
         end
     end
+    AAMMat{i} = temp;
     for n = 1:44
         AAMMatUpsampled{i}(:,n) = interp(AAMMat{i}(:,n),4);
     end
+    save([dirToSave 'AAMs.mat'], 'AAMMat', 'AAMSizeMat');
+    save([dirToSave 'AAMUpsampled.mat'], 'AAMMatUpsampled');
 end
-
-% save([dirToSave 'AAMs.mat'], 'AAMMat', 'AAMSizeMat');
-% save([dirToSave 'AAMUpsampled.mat'], 'AAMMatUpsampled');
 toc
 
 AAM_Clustering_Code2
-computeMI
+MI_Phoneme_AAM_Code
