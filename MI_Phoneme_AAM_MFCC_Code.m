@@ -1,28 +1,28 @@
 % clc;clear all; close all;
 tic
-% subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
+subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 % Read cluster files for all batches for all subjects
 
-execRange = [4];
+execRange = [2];
 MIMat = {[],[],[],[]};
-scheme = 'AAM';
+scheme = 'AAM_MFCC';
 
-load('MI/AAM_Phoneme.mat');
+load('MI/AAM_MFCC_Phoneme.mat');
 for i = execRange
     MIMat{i} = [];
     PhonemeClusterPath = ['Outputs/Phonemes/' subjects{i} '/ClusterOutputs/'];
     AAMClusterPath = ['Outputs/' scheme '/' subjects{i} '/ClusterOutputs/'];
     
     PhonemeFiles = dir([PhonemeClusterPath '*.txt']);
-    AAMFiles = dir([AAMClusterPath '*.txt']);
+    AAM_MFCC_Files = dir([AAMClusterPath '*.txt']);
     
-    for j = 1:length(AAMFiles)
+    for j = 1:length(AAM_MFCC_Files)
         [i,j]
-        PhonemeCluster = dlmread([PhonemeClusterPath AAMFiles(j).name], '\n');
-        AAMCluster = dlmread([AAMClusterPath AAMFiles(j).name], '\n'); 
+        PhonemeCluster = dlmread([PhonemeClusterPath AAM_MFCC_Files(j).name], '\n');
+        AAMCluster = dlmread([AAMClusterPath AAM_MFCC_Files(j).name], '\n'); 
         MIMat{i}(j) = computeMI(PhonemeCluster, AAMCluster);        
     end
 end
 mkdir('MI/');
-save('MI/AAM_Phoneme.mat', 'MIMat');
+save('MI/AAM_MFCC_Phoneme.mat', 'MIMat');
 toc

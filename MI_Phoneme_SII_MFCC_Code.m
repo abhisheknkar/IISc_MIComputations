@@ -3,9 +3,9 @@ tic
 % subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 % Read cluster files for all batches for all subjects
 
-execRange = [4];
+execRange = [1:4];
 MIMat = {[],[],[],[]};
-scheme = 'AAM';
+scheme = 'SII_MFCC';
 
 load('MI/AAM_Phoneme.mat');
 for i = execRange
@@ -24,5 +24,5 @@ for i = execRange
     end
 end
 mkdir('MI/');
-save('MI/AAM_Phoneme.mat', 'MIMat');
+save('MI/SII_MFCC_Phoneme.mat', 'MIMat');
 toc

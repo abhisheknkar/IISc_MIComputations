@@ -1,7 +1,7 @@
 clc;clear all;close all;
 
 SUBJ_list = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
-ToDoRecs = {[],[],[],[4]};
+ToDoRecs = {[],[],[20:24],[]};
 curr_dir = pwd;
 
 for p = 1:length(SUBJ_list)
