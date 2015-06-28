@@ -14,7 +14,7 @@ mkdir(dirToSave);
 load([dirToSave 'AAMs.mat']);
 load([dirToSave 'AAMUpsampled.mat']);
 disp('AAMs loaded!');
-execRange = [4];
+% execRange = [4];
 catchcount = 0;
 %  Populating the lip coordinate matrix for each frame
 for i = execRange

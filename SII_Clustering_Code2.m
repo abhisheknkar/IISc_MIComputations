@@ -4,7 +4,7 @@
 % Optional to load
 ClusterInputSize = 1e5;
 Clusters = 256;
-scheme = 'SII_TIMITBN';
+% scheme = 'SII_TIMITBN';
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 load(['Outputs/' scheme '/SII_Outputs.mat']);
 

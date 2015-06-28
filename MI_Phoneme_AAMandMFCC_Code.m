@@ -3,7 +3,7 @@ tic
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 % Read cluster files for all batches for all subjects
 
-execRange = [2];
+execRange = [1];
 MIMat = {[],[],[],[]};
 scheme = 'AAM_MFCC';
 

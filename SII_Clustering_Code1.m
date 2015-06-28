@@ -2,7 +2,7 @@
 clc;clear all;close all;
 tic
 addpath('voicebox/');
-scheme = 'SII_TIMITBN';
+% scheme = 'SII_TIMITBN';
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 SIIMat = {[],[],[],[]};
 SIISizeMat = {[],[],[],[]};
@@ -10,13 +10,18 @@ SIISizeMat = {[],[],[],[]};
 for i = 1:4
     for j = 1:24
         j
-        folder_path = ['../' scheme '/' subjects{i} '/SII_Outputs/Rec' num2str(j) '/']; 
+        folder_path = ['../SII_' trainwith '/' scheme '/' subjects{i} '/SII_Outputs/Rec' num2str(j) '/']; 
         for k = 1:100
             filename = [folder_path num2str((j-1)*100+k) '_arti.mat'];
             if exist(filename)
                 clear('yhat');
                 load(filename);
-                readOutput = yhat(:,[1:7,9:15]);
+                
+                if strcmp(mode, 'SII_all') == 1
+                    readOutput = yhat(:,[1:7,9:15]);
+                else
+                    readOutput = yhat(:,[1,2,9,10]);
+                end
                 SIIMat{i}(end+1:end+size(readOutput,1),:) = readOutput;
                 SIISizeMat{i}((j-1)*100+k) = size(readOutput,1);
             else
@@ -25,7 +30,7 @@ for i = 1:4
         end
     end
 end
-dirToSave = ['Outputs/' scheme '/'];
+dirToSave = ['Outputs/' mode '/' trainwith '/' scheme '/'];
 mkdir(dirToSave);
 save([dirToSave 'SII_Outputs.mat'], 'SIIMat', 'SIISizeMat');
 toc

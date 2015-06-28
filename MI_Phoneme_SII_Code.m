@@ -3,7 +3,7 @@ tic
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 % Read cluster files for all batches for all subjects
 
-scheme = 'SII_TIMITBN';
+% scheme = 'SII_TIMITBN';
 % load('MI/MFCC_Phoneme.mat');
 MIMat = {[],[],[],[]};
 for i = 1:4

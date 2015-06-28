@@ -7,7 +7,7 @@ Clusters = 256;
 scheme = 'AAM';
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 load(['Outputs/' scheme '/AAMUpsampled.mat']);
-execRange = [1:3];
+% execRange = [1:3];
 for i = execRange
     count = 0;
     ClusterInputDir = ['Outputs/' scheme '/' subjects{i} '/ClusterInputs/'];
