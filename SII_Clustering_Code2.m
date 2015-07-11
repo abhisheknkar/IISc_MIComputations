@@ -6,12 +6,12 @@ ClusterInputSize = 1e5;
 Clusters = 256;
 % scheme = 'SII_TIMITBN';
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
-load(['Outputs/' scheme '/SII_Outputs.mat']);
+load(['Outputs/' mode '/' trainwith '/' scheme '/SII_Outputs.mat']);
 
-for i = 1:4 
+for i = 1:4
     count = 0;
-    ClusterInputDir = ['Outputs/' scheme '/' subjects{i} '/ClusterInputs/'];
-    ClusterOutputDir = ['Outputs/' scheme '/' subjects{i} '/ClusterOutputs/'];
+    ClusterInputDir = ['Outputs/' mode '/' trainwith '/' scheme '/' subjects{i} '/ClusterInputs/'];
+    ClusterOutputDir = ['Outputs/' mode '/' trainwith '/' scheme '/' subjects{i} '/ClusterOutputs/'];
     
     mkdir(ClusterInputDir);
     mkdir(ClusterOutputDir);

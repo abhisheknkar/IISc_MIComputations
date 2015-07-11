@@ -21,5 +21,5 @@ for i = 1:4
     end
 end
 mkdir('MI/');
-% save('MI/MFCC_Phoneme.mat', 'MIMat');
+save('MI/MFCC_Phoneme.mat', 'MIMat');
 toc

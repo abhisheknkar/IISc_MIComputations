@@ -1,4 +1,3 @@
-clc;clear all;close all;
 tic
 c_flag = 1;
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
@@ -68,10 +67,8 @@ for i = execRange
     for n = 1:44
         AAMMatUpsampled{i}(:,n) = interp(AAMMat{i}(:,n),4);
     end
-%     save([dirToSave 'AAMs.mat'], 'AAMMat', 'AAMSizeMat');
-%     save([dirToSave 'AAMUpsampled.mat'], 'AAMMatUpsampled');
+    save([dirToSave 'AAMs.mat'], 'AAMMat', 'AAMSizeMat');
+    save([dirToSave 'AAMUpsampled.mat'], 'AAMMatUpsampled');
 end
 toc
 % disp(['Expected size: ' num2str(sum(AAMSizeMat{1})) '. Total frames: ' num2str(sumframes)]);
-% AAM_Clustering_Code2
-% MI_Phoneme_AAM_Code

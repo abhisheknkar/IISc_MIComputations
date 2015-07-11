@@ -1,10 +1,10 @@
 % This code merges the features present in AAM and MFCC, clusters them and finds the MI
 % between them and Phonemes
 
-clc;clear all; close all;
+% clc;clear all; close all;
 % Now we run the mini-batch KMeans Clustering for each subjects in batches
 % of 100000
-execRange = [1];
+%execRange = [1];
 
 ClusterInputSize = 1e5;
 Clusters = 256;

@@ -1,4 +1,4 @@
-clc;clear all; close all;
+% clc;clear all; close all;
 tic
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 % Read cluster files for all batches for all subjects
@@ -8,7 +8,7 @@ subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 MIMat = {[],[],[],[]};
 for i = 1:4
     PhonemeClusterPath = ['Outputs/Phonemes/' subjects{i} '/ClusterOutputs/'];
-    MFCCClusterPath = ['Outputs/' scheme '/' subjects{i} '/ClusterOutputs/'];
+    MFCCClusterPath = ['Outputs/' mode '/' trainwith '/' scheme '/' subjects{i} '/ClusterOutputs/'];
     
     PhonemeFiles = dir([PhonemeClusterPath '*.txt']);
     MFCCFiles = dir([MFCCClusterPath '*.txt']);
@@ -20,6 +20,6 @@ for i = 1:4
         MIMat{i}(j) = computeMI(PhonemeCluster, MFCCCluster);        
     end
 end
-mkdir('MI/');
-% save(['MI/' scheme '_Phoneme.mat'], 'MIMat');
+mkdir(['MI/' mode '/' trainwith '/']);
+save(['MI/' mode '/' trainwith '/' scheme '_Phoneme.mat'], 'MIMat');
 toc

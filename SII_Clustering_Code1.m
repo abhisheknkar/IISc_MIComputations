@@ -1,5 +1,5 @@
 % This code creates reads all the mfcc files of all subjects and dumps them into a cell
-clc;clear all;close all;
+% clc;clear all;close all;
 tic
 addpath('voicebox/');
 % scheme = 'SII_TIMITBN';
@@ -29,8 +29,8 @@ for i = 1:4
             end
         end
     end
+    dirToSave = ['Outputs/' mode '/' trainwith '/' scheme '/'];
+    mkdir(dirToSave);
+    save([dirToSave 'SII_Outputs.mat'], 'SIIMat', 'SIISizeMat');
 end
-dirToSave = ['Outputs/' mode '/' trainwith '/' scheme '/'];
-mkdir(dirToSave);
-save([dirToSave 'SII_Outputs.mat'], 'SIIMat', 'SIISizeMat');
 toc
