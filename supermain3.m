@@ -18,14 +18,14 @@ mode = 'SII_all';
 
 nRange = 2; %For the trainwith
 
-% SII alone, all features
-for m = execRange
-    for n = nRange
-        scheme = schemes{m};
-        trainwith = trainwiths{n};
-        SII_Clustering_Code1;SII_Clustering_Code2; MI_Phoneme_SII_Code;
-    end
-end
+% % SII alone, all features
+% for m = execRange
+%     for n = nRange
+%         scheme = schemes{m};
+%         trainwith = trainwiths{n};
+%         SII_Clustering_Code1;SII_Clustering_Code2; MI_Phoneme_SII_Code;
+%     end
+% end
 
 %
 % SII only lips

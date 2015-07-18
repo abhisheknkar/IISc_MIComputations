@@ -7,6 +7,11 @@ subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 SIIMat = {[],[],[],[]};
 SIISizeMat = {[],[],[],[]};
 
+dirToSave = ['Outputs/' mode '/' trainwith '/' scheme '/'];
+if exist([dirToSave 'SII_Outputs.mat'])
+    load([dirToSave 'SII_Outputs.mat']);
+end
+
 for i = subjectstorun
     for j = 1:24
         j
@@ -29,7 +34,6 @@ for i = subjectstorun
             end
         end
     end
-    dirToSave = ['Outputs/' mode '/' trainwith '/' scheme '/'];
     mkdir(dirToSave);
     save([dirToSave 'SII_Outputs.mat'], 'SIIMat', 'SIISizeMat');
 end
