@@ -69,7 +69,7 @@ fprintf(fid, 'Table format:\n\tTIMITBN\tGASBN\tTIMIT\nMSAK0\nFSEW0');
 for i = 1:4
     fprintf(fid, ['\n' tableids{i} '\n']);
 %     fprintf(fid,'%6.2f %12.8f\n',A);
-    fprintf(fid,'%6.2f %6.2f %6.2f\n',tables(:,:,i));
+    fprintf(fid,'%6.3f %6.3f %6.3f\n',tables(:,:,i));
 %     dlmwrite(filename,tables(:,:,i), 'delimiter','\t','precision',3, '-append');
 end
 
