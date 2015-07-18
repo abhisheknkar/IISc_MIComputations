@@ -17,7 +17,7 @@ disp('Mats loaded!');
 
 SII_MFCCMat = {[],[],[],[]};
 
-for i = 1:4
+for i = subjectstorun
     SII_MFCCMat{i} = [SIIMat{i} MFCCMat{i}];
     disp('Mats merged!');
 

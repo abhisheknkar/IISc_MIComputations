@@ -7,8 +7,10 @@ subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 MIMat = {[],[],[],[]};
 % scheme = 'SII_MFCC';
 
-% load('MI/SII_MFCC_Phoneme.mat');
-for i = 1:4
+if exist('MI/SII_MFCC_Phoneme.mat') 
+    load('MI/SII_MFCC_Phoneme.mat');
+end
+for i = subjectstorun
     MIMat{i} = [];
     PhonemeClusterPath = ['Outputs/Phonemes/' subjects{i} '/ClusterOutputs/'];
     AAMClusterPath = ['Outputs/' mode '/' trainwith '/' scheme '/' subjects{i} '/ClusterOutputs/'];

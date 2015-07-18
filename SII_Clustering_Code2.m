@@ -8,7 +8,7 @@ Clusters = 256;
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 load(['Outputs/' mode '/' trainwith '/' scheme '/SII_Outputs.mat']);
 
-for i = 1:4
+for i = subjectstorun
     count = 0;
     ClusterInputDir = ['Outputs/' mode '/' trainwith '/' scheme '/' subjects{i} '/ClusterInputs/'];
     ClusterOutputDir = ['Outputs/' mode '/' trainwith '/' scheme '/' subjects{i} '/ClusterOutputs/'];

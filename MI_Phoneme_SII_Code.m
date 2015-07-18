@@ -4,9 +4,13 @@ subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 % Read cluster files for all batches for all subjects
 
 % scheme = 'SII_TIMITBN';
-% load('MI/MFCC_Phoneme.mat');
 MIMat = {[],[],[],[]};
-for i = 1:4
+if exist('MI/MFCC_Phoneme.mat')
+    load('MI/MFCC_Phoneme.mat');
+end
+
+for i = subjectstorun
+    MIMat{i} = [];
     PhonemeClusterPath = ['Outputs/Phonemes/' subjects{i} '/ClusterOutputs/'];
     MFCCClusterPath = ['Outputs/' mode '/' trainwith '/' scheme '/' subjects{i} '/ClusterOutputs/'];
     

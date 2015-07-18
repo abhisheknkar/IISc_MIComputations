@@ -7,7 +7,7 @@ subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 SIIMat = {[],[],[],[]};
 SIISizeMat = {[],[],[],[]};
 
-for i = 1:4
+for i = subjectstorun
     for j = 1:24
         j
         folder_path = ['../SII_' trainwith '/' scheme '/' subjects{i} '/SII_Outputs/Rec' num2str(j) '/']; 
