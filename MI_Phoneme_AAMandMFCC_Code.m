@@ -3,12 +3,13 @@ tic
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 % Read cluster files for all batches for all subjects
 
-% execRange = [1];
 MIMat = {[],[],[],[]};
-scheme = 'AAM_MFCC';
+scheme = [mode_AAM '_MFCC'];
 
-load('MI/AAM_MFCC_Phoneme.mat');
-for i = 1:4
+if exist(['MI/' scheme '_Phoneme.mat'])
+    load(['MI/' scheme '_Phoneme.mat']);
+end
+for i = subjectstorun
     MIMat{i} = [];
     PhonemeClusterPath = ['Outputs/Phonemes/' subjects{i} '/ClusterOutputs/'];
     AAMClusterPath = ['Outputs/' scheme '/' subjects{i} '/ClusterOutputs/'];
@@ -24,5 +25,5 @@ for i = 1:4
     end
 end
 mkdir('MI/');
-save('MI/AAM_MFCC_Phoneme.mat', 'MIMat');
+save(['MI/' scheme '_Phoneme.mat'], 'MIMat');
 toc

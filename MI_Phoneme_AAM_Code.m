@@ -5,13 +5,15 @@ tic
 
 % execRange = [4];
 MIMat = {[],[],[],[]};
-scheme = 'AAM';
 
-load('MI/AAM_Phoneme.mat');
-for i = execRange
+if exist(['MI/' mode_AAM '_Phoneme.mat'])
+    load(['MI/' mode_AAM '_Phoneme.mat']);
+end
+
+for i = subjectstorun
     MIMat{i} = [];
     PhonemeClusterPath = ['Outputs/Phonemes/' subjects{i} '/ClusterOutputs/'];
-    AAMClusterPath = ['Outputs/' scheme '/' subjects{i} '/ClusterOutputs/'];
+    AAMClusterPath = ['Outputs/' mode_AAM '/' subjects{i} '/ClusterOutputs/'];
     
     PhonemeFiles = dir([PhonemeClusterPath '*.txt']);
     AAMFiles = dir([AAMClusterPath '*.txt']);
@@ -24,5 +26,5 @@ for i = execRange
     end
 end
 mkdir('MI/');
-save('MI/AAM_Phoneme.mat', 'MIMat');
+save(['MI/' mode_AAM '_Phoneme.mat'], 'MIMat');
 toc

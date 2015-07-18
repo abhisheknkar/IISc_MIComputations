@@ -8,17 +8,23 @@
 
 ClusterInputSize = 1e5;
 Clusters = 256;
-scheme = 'AAM_MFCC';
+scheme = [mode_AAM '_MFCC'];
+
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
-load(['Outputs/AAM/AAMUpsampled1to1.mat']);
+load(['Outputs/AAM_all/AAMUpsampled1to1.mat']);
 load(['Outputs/MFCC/MFCCs.mat']);
 
 disp('Mats loaded!');
 
 AAM_MFCCMat = {[],[],[],[]};
 
-for i = execRange
-    AAM_MFCCMat{i} = [AAMMatUpsampled1to1{i} MFCCMat{i}];
+for i = subjectstorun
+    if strcmp(mode_AAM, 'AAM_all')
+        AAM_MFCCMat{i} = [AAMMatUpsampled1to1{i} MFCCMat{i}];
+    else
+        toAddAAM = 0.5 * (AAMMatUpsampled1to1{i}(:,[5,21,27,43]) + AAMMatUpsampled1to1{i}(:,[17,12,39,34]));
+        AAM_MFCCMat{i} = [toAddAAM MFCCMat{i}];       
+    end
     
     for j = 1:size(AAM_MFCCMat{i},2)
         col = AAM_MFCCMat{i}(:,j);

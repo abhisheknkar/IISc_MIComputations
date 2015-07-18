@@ -1,4 +1,4 @@
-% This code will perform the MI computation for the SII_TIMIT scheme trained with fsew0
+%TIMITBN trained with fsew
 clc;clear all; close all;
 subjectstorun = [1:4];
 %% 
@@ -11,12 +11,12 @@ subjectstorun = [1:4];
 % execRange = [2:4];
 % AAMandMFCC_Clustering_Code;MI_Phoneme_AAMandMFCC_Code;
 %%
-execRange = [3];
+execRange = [1];
 schemes = {'SII_TIMITBN', 'SII_GASBN', 'SII_TIMIT'};
 trainwiths = {'msak0', 'fsew0'};
 mode = 'SII_all';
 
-nRange = 2; %For the trainwith
+nRange = 1; %For the trainwith
 
 % SII alone, all features
 for m = execRange

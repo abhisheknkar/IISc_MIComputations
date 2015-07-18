@@ -7,8 +7,9 @@ subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 MIMat = {[],[],[],[]};
 % scheme = 'SII_MFCC';
 
-if exist('MI/SII_MFCC_Phoneme.mat') 
-    load('MI/SII_MFCC_Phoneme.mat');
+mkdir(['MI/' mode '/' trainwith '/']);
+if exist(['MI/' mode '/' trainwith '/' scheme '_Phoneme.mat']) 
+    load(['MI/' mode '/' trainwith '/' scheme '_Phoneme.mat']);
 end
 for i = subjectstorun
     MIMat{i} = [];
@@ -24,6 +25,5 @@ for i = subjectstorun
         MIMat{i}(j) = computeMI(PhonemeCluster, AAMCluster);        
     end
 end
-mkdir('MI/');
 save(['MI/' mode '/' trainwith '/' scheme '_Phoneme.mat'], 'MIMat');
 toc

@@ -5,7 +5,7 @@ tic
 c_flag = 1;
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 
-scheme = 'AAM';
+scheme = 'AAM_all';
 
 AAMMat1to1 = {[],[],[],[]};
 AAMMatUpsampled1to1 = {[],[],[],[]};
@@ -15,10 +15,11 @@ dirToSave = ['Outputs/' scheme '/'];
 mkdir(dirToSave);
 load([dirToSave 'AAMs.mat']);
 load([dirToSave 'AAMUpsampled.mat']);
+load([dirToSave 'AAMUpsampled1to1.mat']);
 load('Outputs/MFCC/MFCCs.mat');
 disp('AAMs loaded!');
 
-execRange = [1:4];
+execRange = [1:3];
 
 %  Populating the lip coordinate matrix for each frame
 for i = execRange

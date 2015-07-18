@@ -2,13 +2,11 @@ tic
 c_flag = 1;
 subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 
-scheme = 'AAM';
-
 AAMMat = {[],[],[],[]};
 AAMMatUpsampled = {[],[],[],[]};
 AAMSizeMat = {[],[],[],[]};
 
-dirToSave = ['Outputs/' scheme '/'];
+dirToSave = ['Outputs/' mode_AAM '/'];
 mkdir(dirToSave);
 load([dirToSave 'AAMs.mat']);
 load([dirToSave 'AAMUpsampled.mat']);
@@ -16,7 +14,7 @@ disp('AAMs loaded!');
 % execRange = [4];
 catchcount = 0;
 %  Populating the lip coordinate matrix for each frame
-for i = execRange
+for i = subjectstorun
 % Recording Level
     AAMSizeMat{i} = [];
     AAMMatUpsampled{i} = [];

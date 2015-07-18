@@ -28,9 +28,9 @@ for i = 1:2
     end
 end
 
-results_AAM = cell(3,1);
-schemes_AAM = {'AAM', 'AAM_MFCC', 'MFCC'};
-for m = 1:3
+results_AAM = cell(5,1);
+schemes_AAM = {'AAM_all', 'AAM_all_MFCC', 'AAM_lipsonly', 'AAM_lipsonly_MFCC', 'MFCC'};
+for m = 1:5
     filename = ['MI/' schemes_AAM{m} '_Phoneme.mat'];
     if exist(filename)  
         clear MIMat
@@ -59,15 +59,17 @@ end
 
 tableids = {'All, single', 'All, MFCC', 'LipsOnly, single', 'LipsOnly, MFCC'};
 fid = fopen(filename,'w');
-for i = 1:3
+for i = 1:5
     fprintf(fid, [schemes_AAM{i} ': ']);
     fprintf(fid, [num2str(results_AAM{i}{1}(1)) '\n']);
 end
 
+fprintf(fid, 'Table format:\n\tTIMITBN\tGASBN\tTIMIT\nMSAK0\nFSEW0'); 
+
 for i = 1:4
     fprintf(fid, ['\n' tableids{i} '\n']);
 %     fprintf(fid,'%6.2f %12.8f\n',A);
-    fprintf(fid,'%6.2f %6.2f %6.2f\n',tables(:,:,i)');
+    fprintf(fid,'%6.2f %6.2f %6.2f\n',tables(:,:,i));
 %     dlmwrite(filename,tables(:,:,i), 'delimiter','\t','precision',3, '-append');
 end
 
