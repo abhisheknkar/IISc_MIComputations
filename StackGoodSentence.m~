@@ -17,15 +17,13 @@ if ismember('AAM', methodsToImplement)
     modes_AAM = {'AAM_all', 'AAM_lipsonly'}; 
     additionals_AAM = {'', 'andMFCC'};
     
-    disp('Loading AAMs');load('Outputs/AAM/AAM_all/AAMUpsampled1to1.mat');
+    disp('Loading AAMs');load('Outputs/AAM_all/AAMUpsampled1to1.mat');
     disp('Loading MFCCs');load('Outputs/MFCC/MFCCs.mat');
     disp('AAMs loaded. Folding them...');
 
+
     for i = 1:2 %Modes
-        mode_AAM = modes_AAM{i};
-        for j = 1:2 %Additionals            
-            additional_AAM = additionals_AAM{j};
-            disp(['Current iteration is on: ' mode_AAM ', ' additional_AAM]);  
+        for j = 1:2 %Additionals
             toPass = AAMMatUpsampled1to1;
             
             if i == 2
@@ -39,8 +37,8 @@ if ismember('AAM', methodsToImplement)
                    toPass{k} = [toPass{k} MFCCMat{k}];
                end
             end
-            outputfolder = ['Outputs/AAM/' mode_AAM additional_AAM]; 
-            coreStacker(toPass, MFCCSizeMat, outputfolder, foldsize);
+            outputfolder = ['Outputs/AAM/' 
+            coreStacker(toPass, MFCCSizeMat, 'Outputs/AAM/AAM_all', foldsize);
         end
     end
 end
