@@ -1,7 +1,7 @@
 % This code considers the clustering of AAM experiments with just the lip
 % features extracted from AAM
 clc;clear all; close all;
-subjectstorun = [3];
+subjectstorun = [1:4];
 % %% 
 % % AAM all coordinates
 % mode_AAM = 'AAM_all';
@@ -27,17 +27,17 @@ schemes = {'SII_TIMITBN', 'SII_GASBN', 'SII_TIMIT'};
 trainwiths = {'msak0', 'fsew0'};
 mode = 'SII_all';
 % 
-nRange = 2; %For the trainwith
+nRange = 1; %For the trainwith
 % 
 % % SII alone, all features
-for m = execRange
-    for n = nRange
-        scheme = schemes{m};
-        trainwith = trainwiths{n};
-        SII_Clustering_Code1;
-%         SII_Clustering_Code2; MI_Phoneme_SII_Code;
-    end
-end
+% for m = execRange
+%     for n = nRange
+%         scheme = schemes{m};
+%         trainwith = trainwiths{n};
+% %         SII_Clustering_Code1;SII_Clustering_Code2; 
+%         MI_Phoneme_SII_Code;
+%     end
+% end
 % 
 % %
 % % SII only lips
@@ -65,9 +65,9 @@ end
 %     end
 % end
 % 
-% %%
+% 
 % % SII+MFCC only lips
-% % execRange = [2];
+% execRange = [2];
 % mode = 'SII_lipsonly';
 % for m = execRange
 %     for n = nRange
