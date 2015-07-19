@@ -1,15 +1,9 @@
 clc;clear all;close all;
-% This file initializes all the final mats and distributes the outputs
-% among them appropriately
+% This file initializes all the structs
 tic
 
-%% Initialize all structs
-structs(1:2368) = struct();
-
 %% MFCC
-for k = 1:2368
-    structs(k).MFCC = [];
-end
+finalstruct.MFCC = [];
 
 %% AAM fields
 modes_AAM = {'AAM_all', 'AAM_lipsonly'}; 
@@ -18,10 +12,8 @@ for i = 1:2 %Modes
     mode_AAM = modes_AAM{i};
     for j = 1:2 %Additionals            
         additional_AAM = additionals_AAM{j};
-        for k = 1:2368
-            fieldname = [mode_AAM additional_AAM];
-            structs(k).(fieldname) = [];
-        end
+        fieldname = [mode_AAM additional_AAM];
+        finalstruct.(fieldname) = [];
     end
 end
 
@@ -42,14 +34,11 @@ for m = 1:3 %Scheme
             for p = 1:2   %Additional
                 additional = additionals{p};
                 fieldname = [mode additional '_' scheme '_' trainwith];
-                for k = 1:2368
-                    structs(k).(fieldname) = [];
-                end
+                finalstruct.(fieldname) = [];
             end
         end
     end
 end
     
 %% Phoneme
-
-toc
+finalstruct.Phonemes = [];

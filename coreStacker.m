@@ -8,11 +8,10 @@ subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 inputGood = {[],[],[],[]};
 inputGoodsizemat = {[],[],[],[]};
 
-for i = 1:4
+for i = 1:4      
     if size(input{i},1)==1 && size(input{i},2)>1
         input{i} = input{i}';
     end
-        
     mkdir([outputfolder '/' subjects{i} '/ClusterInputs/']);
     
     disp(['Folding data for ' subjects{i}]);
@@ -28,6 +27,9 @@ for i = 1:4
             folds = folds + 1;
             inputGood{i}(end+1:end+size(toStore,1),1:size(toStore,2)) = toStore;
             dlmwrite([outputfolder '/' subjects{i} '/ClusterInputs/' num2str(folds) '.txt'], toStore, ' ');
+            if min(size(toStore,1), size(toStore,2)) == 1
+                dlmwrite([outputfolder '/' subjects{i} '/ClusterInputs/' num2str(folds) '.txt'], toStore, '\n');
+            end
             toStore = [];
             foldcount = 0;
         end

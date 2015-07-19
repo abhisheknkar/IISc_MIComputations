@@ -1,6 +1,6 @@
 % clc;clear all; close all;
-tic
-% subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
+
+subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
 % Read cluster files for all batches for all subjects
 
 % execRange = [4];
@@ -11,6 +11,7 @@ if exist(['MI/' mode_AAM '_Phoneme.mat'])
 end
 
 for i = subjectstorun
+    disp(subjects{i});
     MIMat{i} = [];
     PhonemeClusterPath = ['Outputs/Phonemes/' subjects{i} '/ClusterOutputs/'];
     AAMClusterPath = ['Outputs/' mode_AAM '/' subjects{i} '/ClusterOutputs/'];
@@ -25,6 +26,5 @@ for i = subjectstorun
         MIMat{i}(j) = computeMI(PhonemeCluster, AAMCluster);        
     end
 end
-mkdir('MI/');
-save(['MI/' mode_AAM '_Phoneme.mat'], 'MIMat');
-toc
+mkdir('MI/AAM');
+save(['MI/AAM/' mode_AAM '_Phoneme.mat'], 'MIMat');

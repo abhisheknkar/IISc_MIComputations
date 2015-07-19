@@ -5,8 +5,8 @@ tic
 
 methodsToImplement = {...
 %     'AAM',...
-    'MFCC',...
-%     'Phonemes',...
+%     'MFCC',...
+    'Phonemes',...
 %     'SII'...
     };
 %% Load good sentences
@@ -18,20 +18,7 @@ if ismember('MFCC', methodsToImplement)
     clear 'inputGood', 'inputGoodsizemat';
     load('Outputs/MFCC/goodmat.mat');
     disp('MFCC data loaded. Saving MFCC data for');
-    for i = 1:4
-        disp(subjects{i});
-        count = 0;
-        for k = 1:length(GoodSentences{i})            
-            clear 'finalstruct'
-            outputfilename = ['Outputs/mats_final/' subjects{i} '/' num2str(GoodSentences{i}(k)) '.mat'];
-            load(outputfilename);
-
-            finalstruct.MFCC = inputGood{i}(count+1:count+inputGoodsizemat{i}(k), 1:size(inputGood{i},2));
-            count = count + inputGoodsizemat{i}(k);
-            
-            save(outputfilename, 'finalstruct');
-        end
-    end
+    coreStorer(inputGood, inputGoodsizemat, 'MFCC');
 end
 
 %% AAM fields
@@ -49,47 +36,50 @@ if ismember('AAM', methodsToImplement)
             %Now do it for all files
             clear 'inputGood', 'inputGoodsizemat';
             load(filename);
-            
-            
+            disp(['AAM data loaded for config: ' mode_AAM additional_AAM '. Saving MFCC data for']);
+            coreStorer(inputGood, inputGoodsizemat, fieldname);
+            disp('\n');
         end
     end
 end
 
 %% SII variants
-schemes = {'SII_TIMITBN', 'SII_GASBN', 'SII_TIMIT'};
-trainwiths = {'msak0', 'fsew0'};
-modes = {'SII_all', 'SII_lipsonly'};
-additionals = {'', 'andMFCC'};
-execRange = 1:3;
-nRange = 1:2; %For the trainwith
+if ismember('SII', methodsToImplement)    
+    schemes = {'SII_TIMITBN', 'SII_GASBN', 'SII_TIMIT'};
+    trainwiths = {'msak0', 'fsew0'};
+    modes = {'SII_all', 'SII_lipsonly'};
+    additionals = {'', 'andMFCC'};
+    execRange = 1:3;
+    nRange = 1:2; %For the trainwith
 
-for m = 1:3 %Scheme
-    scheme = schemes{m};
-    for n = 1:2 %Trainwith
-        trainwith = trainwiths{n};
-        for o = 1:2   %Mode
-            mode = modes{o};
-            for p = 1:2   %Additional
-                additional = additionals{p};
-                fieldname = [mode additional '_' scheme '_' trainwith];
-                finalstruct.(fieldname) = [];
+    for m = 1:3 %Scheme
+        scheme = schemes{m};
+        for n = 1:2 %Trainwith
+            trainwith = trainwiths{n};
+            for o = 1:2   %Mode
+                mode = modes{o};
+                for p = 1:2   %Additional
+                    [m n o p]
+                    additional = additionals{p};
+                    fieldname = [mode additional '_' scheme '_' trainwith];
+
+                    filename = ['Outputs/' mode '/' trainwith '/' [scheme additional] '/goodmat.mat'];
+                    %Now do it for all files
+                    clear 'inputGood', 'inputGoodsizemat';
+                    load(filename);
+                    disp(['SII data loaded for config: ' mode '/' trainwith '/' [scheme additional] '. Saving MFCC data for']);
+                    coreStorer(inputGood, inputGoodsizemat, fieldname);
+                end
             end
         end
     end
 end
-    
-%% Phoneme
-finalstruct.Phonemes = [];
 
-%% Store them
-% subjects = {'Abhay', 'Abhishek', 'Gopika', 'Niranjana'};
-% load('Outputs/GoodSentences.mat');
-% for l = 1:4
-%     disp(['Saving outputs for ' subjects{l}]);
-%     mkdir(['Outputs/mats_final/' subjects{l}]);
-%     for k = 1:length(GoodSentences{l})
-%         outputfilename = ['Outputs/mats_final/' subjects{l} '/' num2str(GoodSentences{l}(k)) '.mat'];
-%         save(outputfilename, 'finalstruct');    
-%     end
-% end
+%% Phoneme
+if ismember('Phonemes', methodsToImplement)    
+    clear 'inputGood', 'inputGoodsizemat';
+    load('Outputs/Phonemes/goodmat.mat');
+    disp('Phoneme data loaded. Saving Phoneme data for');
+    coreStorer(inputGood, inputGoodsizemat, 'Phonemes');
+end
 toc
