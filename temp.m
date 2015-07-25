@@ -1,4 +1,4 @@
-function generateASRinput(subjectid, fold, featureid)
+function generateASRinput_temp(subjectid, fold, featureid)
     % subjectid: 1=Abhay, 2=Abhishek, 3=Gopika, 4=Niranjana    
 
     % fold: Leaves out all sentences belonging to that fold and uses them as
@@ -6,8 +6,8 @@ function generateASRinput(subjectid, fold, featureid)
 
     % featureid: Ranges from 1 to 29, description given in the cell "features"
     % below
-
-   
+    % ***In lines 95 and 124, add "features{featureid} '/' " after FEATURES/
+    % and before mode to store each feature in a different folder***
     
     tic
     %% Approach
@@ -69,8 +69,8 @@ function generateASRinput(subjectid, fold, featureid)
     mkdir(dirnameTrain); mkdir(dirnameTest);    
     
 %     MLF Paths
-    mlf_train_path = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/train.out'];
-    mlf_test_path = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/test.out'];
+    mlf_train_path = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/train_mlf'];
+    mlf_test_path = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/test_mlf'];
     
     mfc_train_paths = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/train_mfc'];
     mfc_test_paths = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/test_mfc'];
@@ -90,10 +90,10 @@ function generateASRinput(subjectid, fold, featureid)
 %     Train:
     disp(['Writing feature ' features{featureid} ' in fold ' num2str(fold) ' for ' subjects{subjectid} '.']);
     disp('Writing files for train...');
-    
+
     mode = 'train';
-    mlf_common_path = ['"/home/prasanta/HTK_Projects/AV_ASR/FEATURES/' mode '/'];
-    for i = 1:length(trainsentenceids)
+    mlf_common_path = ['/home/prasanta/HTK_Projects/AV_ASR/FEATURES/' mode '/'];
+    for i = 1:length(trainsentenceids)       
         try
             if mod(i,100) == 0
                 disp(['Finished ' num2str(i) ' out of ' num2str(length(trainsentenceids)) ' sentences in train.']);
@@ -105,9 +105,13 @@ function generateASRinput(subjectid, fold, featureid)
             load(structpath);
             featuremat = finalstruct.(features{featureid});
             mfcpath = [dirnameTrain '/' num2str(currid) '.mfc'];
-            writehtk(mfcpath, featuremat, 0.01, 9);
-            PhonemeToMLF(mlf_train_path, currid, finalstruct.Phonemes, 0.01, i==1, mode);
-            fprintf(fid2, [mlf_common_path num2str(currid) '.mfc\n']);
+            if size(featuremat,1) == 0
+                disp(num2str(currid));
+                continue
+            end
+%             writehtk(mfcpath, featuremat, 0.01, 9);
+%             PhonemeToMLF(mlf_train_path, currid, finalstruct.Phonemes, 0.01, i==1, mode);
+%             fprintf(fid2, [mlf_common_path num2str(currid) '.mfc\n']);
         catch
             fid1 = fopen(errorlog_train, 'a+');
             fprintf(fid1, ['Error in sentence ' num2str(trainsentenceids(i)) '\n']);
@@ -131,9 +135,13 @@ function generateASRinput(subjectid, fold, featureid)
             load(structpath);
             featuremat = finalstruct.(features{featureid});
             mfcpath = [dirnameTest '/' num2str(currid) '.mfc'];
-            writehtk(mfcpath, featuremat, 0.01, 9);        
-            PhonemeToMLF(mlf_test_path, currid, finalstruct.Phonemes, 0.01, i==1, mode);
-            fprintf(fid3, [mlf_common_path num2str(currid) '.mfc\n']);
+            if size(featuremat,1) == 0
+                disp(num2str(currid));
+                continue
+            end
+%             writehtk(mfcpath, featuremat, 0.01, 9);        
+%             PhonemeToMLF(mlf_test_path, currid, finalstruct.Phonemes, 0.01, i==1, mode);
+%             fprintf(fid3, [mlf_common_path num2str(currid) '.mfc\n']);
         catch
             fid1 = fopen(errorlog_train, 'a+');
             fprintf(fid1, ['Error in sentence ' num2str(testsentenceids(i)) '\n']);

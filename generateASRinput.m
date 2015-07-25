@@ -6,7 +6,7 @@ function generateASRinput(subjectid, fold, featureid)
 
     % featureid: Ranges from 1 to 29, description given in the cell "features"
     % below
-    % ***In lines 95 and 124, add "features{featureid} '/' " after FEATURES/
+    % ***In lines denoting mlf_common_path, add "features{featureid} '/' " after FEATURES/
     % and before mode to store each feature in a different folder***
     
     tic
@@ -69,8 +69,8 @@ function generateASRinput(subjectid, fold, featureid)
     mkdir(dirnameTrain); mkdir(dirnameTest);    
     
 %     MLF Paths
-    mlf_train_path = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/train.out'];
-    mlf_test_path = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/test.out'];
+    mlf_train_path = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/train_mlf'];
+    mlf_test_path = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/test_mlf'];
     
     mfc_train_paths = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/train_mfc'];
     mfc_test_paths = ['Outputs/ASR_input/' subjects{subjectid} '/' features{featureid} '/fold' num2str(fold) '/test_mfc'];
@@ -87,13 +87,17 @@ function generateASRinput(subjectid, fold, featureid)
 %     Go to each sentence in the fold take each of their required features,
 %     write using writehtk
 
+%     Error logs
+    fide1 = fopen(errorlog_train, 'a+');
+    fide2 = fopen(errorlog_test, 'a+');
+
 %     Train:
     disp(['Writing feature ' features{featureid} ' in fold ' num2str(fold) ' for ' subjects{subjectid} '.']);
     disp('Writing files for train...');
-    
+
     mode = 'train';
-    mlf_common_path = ['"/home/prasanta/HTK_Projects/AV_ASR/FEATURES/' mode '/'];
-    for i = 1:length(trainsentenceids)
+    mlf_common_path = ['/home/prasanta/HTK_Projects/AV_ASR/FEATURES/' mode '/'];
+    for i = 1:length(trainsentenceids)       
         try
             if mod(i,100) == 0
                 disp(['Finished ' num2str(i) ' out of ' num2str(length(trainsentenceids)) ' sentences in train.']);
@@ -104,24 +108,30 @@ function generateASRinput(subjectid, fold, featureid)
 
             load(structpath);
             featuremat = finalstruct.(features{featureid});
+
+            if size(featuremat,1) == 0
+                disp(['(!)Empty struct at : ' num2str(currid)]);
+                fprintf(fide1, ['Empty struct at : ' num2str(currid) '\n']);
+                continue
+            end
+            
             mfcpath = [dirnameTrain '/' num2str(currid) '.mfc'];
             writehtk(mfcpath, featuremat, 0.01, 9);
             PhonemeToMLF(mlf_train_path, currid, finalstruct.Phonemes, 0.01, i==1, mode);
             fprintf(fid2, [mlf_common_path num2str(currid) '.mfc\n']);
         catch
-            fid1 = fopen(errorlog_train, 'a+');
-            fprintf(fid1, ['Error in sentence ' num2str(trainsentenceids(i)) '\n']);
-            fclose(fid1);
+            fprintf(fide1, ['Error in sentence ' num2str(trainsentenceids(i)) '\n']);
             disp(['(!)Error in sentence ' num2str(trainsentenceids(i)) '. Deleting it']);
             delete(mfcpath);
         end         
     end
+    fclose(fide1);
     disp('Finished train. Writing files for test...');
 
 %     Test:
-
     mode = 'test';
     mlf_common_path = ['/home/prasanta/HTK_Projects/AV_ASR/FEATURES/' mode '/'];
+    
     for i = 1:length(testsentenceids)
         try
             currid = testsentenceids(i);
@@ -130,18 +140,24 @@ function generateASRinput(subjectid, fold, featureid)
 
             load(structpath);
             featuremat = finalstruct.(features{featureid});
+
+            if size(featuremat,1) == 0
+                disp(['(!)Empty struct at : ' num2str(currid)]);
+                fprintf(fide2, ['Empty struct at : ' num2str(currid) '\n']);
+                continue
+            end
+            
             mfcpath = [dirnameTest '/' num2str(currid) '.mfc'];
             writehtk(mfcpath, featuremat, 0.01, 9);        
             PhonemeToMLF(mlf_test_path, currid, finalstruct.Phonemes, 0.01, i==1, mode);
             fprintf(fid3, [mlf_common_path num2str(currid) '.mfc\n']);
         catch
-            fid1 = fopen(errorlog_train, 'a+');
-            fprintf(fid1, ['Error in sentence ' num2str(testsentenceids(i)) '\n']);
-            fclose(fid1);
+            fprintf(fide2, ['Error in sentence ' num2str(testsentenceids(i)) '\n']);
             disp(['(!)Error in sentence ' num2str(testsentenceids(i)) '. Deleting it']);
             delete(mfcpath);
         end         
     end
+    fclose(fide2);
     disp(['Finished test.']);
     disp(['Completed feature ' features{featureid} ' in fold ' num2str(fold) ' for ' subjects{subjectid} '.']);
     
