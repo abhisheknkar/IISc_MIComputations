@@ -29,9 +29,12 @@ for i = 1:2
 end
 
 results_AAM = cell(5,1);
-schemes_AAM = {'AAM_all', 'AAM_all_MFCC', 'AAM_lipsonly', 'AAM_lipsonly_MFCC', 'MFCC'};
+schemes_AAM = {'AAM_all', 'AAM_allandMFCC', 'AAM_lipsonly', 'AAM_lipsonlyandMFCC', 'MFCC'};
 for m = 1:5
-    filename = ['MI/' schemes_AAM{m} '_Phoneme.mat'];
+    filename = ['MI/AAM/' schemes_AAM{m} '_Phoneme.mat'];
+    if m == 5
+        filename = ['MI/' schemes_AAM{m} '_Phoneme.mat'];
+    end
     if exist(filename)  
         clear MIMat
         load(filename);
